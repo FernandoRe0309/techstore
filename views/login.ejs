@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+<div class="form-box">
+    <h2>Iniciar Sesión</h2>
+    <form action="/login" method="POST">
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <label>Contraseña:</label>
+        <input type="password" name="password" required>
+        <button type="submit" style="width: 100%">Entrar</button>
+    </form>
+    <p>¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
+</div>
+<%- include('partials/footer') %>

@@ -1,0 +1,108 @@
+:root {
+    --primary: #007bff;
+    --dark: #222;
+    --light: #f4f4f4;
+    --bg: #1a1a1a;
+    --card-bg: #2c2c2c;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--light);
+}
+
+/* Navbar */
+nav {
+    background-color: #000;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: bold;
+}
+nav .logo { font-size: 1.5rem; color: var(--primary); }
+
+/* Contenedores */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Grid de Productos */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+.card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+.card:hover { transform: translateY(-5px); }
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.price { color: var(--primary); font-size: 1.2rem; font-weight: bold; }
+
+/* Botones */
+button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+button:hover { opacity: 0.9; }
+.btn-danger { background-color: #dc3545; }
+
+/* Tabla Carrito e Historial */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--card-bg);
+    margin-top: 20px;
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+th { background-color: #000; }
+.total-section {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+/* Forms */
+.form-box {
+    max-width: 400px;
+    margin: 50px auto;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}

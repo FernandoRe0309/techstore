@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+<div class="form-box">
+    <h2>Registro</h2>
+    <form action="/register" method="POST">
+        <label>Nombre de Usuario:</label>
+        <input type="text" name="username" required>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <label>Contraseña:</label>
+        <input type="password" name="password" required>
+        <button type="submit" style="width: 100%">Registrarse</button>
+    </form>
+</div>
+<%- include('partials/footer') %>

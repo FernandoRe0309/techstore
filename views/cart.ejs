@@ -1,0 +1,86 @@
+<%- include('partials/header') %>
+
+<h2>Tu Carrito de Compras</h2>
+
+<% if (cart.length === 0) { %>
+    <p>El carrito está vacío. <a href="/">Ir a comprar</a></p>
+<% } else { %>
+    <table id="cart-table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% cart.forEach(item => { %>
+                <tr id="row-<%= item.id %>">
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <img src="<%= item.image %>" width="50" height="50" style="object-fit: cover; border-radius: 4px;">
+                            <%= item.name %>
+                        </div>
+                    </td>
+                    <td>$<%= item.price.toFixed(2) %></td>
+                    <td id="qty-<%= item.id %>" style="font-weight: bold; font-size: 1.1em;"><%= item.quantity %></td>
+                    <td id="sub-<%= item.id %>">$<%= (item.price * item.quantity).toFixed(2) %></td>
+                    <td>
+                        <button onclick="updateCart('<%= item.id %>', 'decrease')">-</button>
+                        <button onclick="updateCart('<%= item.id %>', 'increase')">+</button>
+                        <button onclick="updateCart('<%= item.id %>', 'remove')" class="btn-danger">Eliminar</button>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <div class="total-section">
+        <h3>Total a Pagar: $<span id="cart-total"><%= total.toFixed(2) %></span></h3>
+        
+        <% if (user) { %>
+            <form action="/checkout" method="POST">
+                <button type="submit" style="padding: 15px 30px; font-size: 1.2rem;">Finalizar Compra y Descargar Ticket</button>
+            </form>
+        <% } else { %>
+            <p style="color: #dc3545;">Debes iniciar sesión para comprar.</p>
+            <a href="/login"><button>Iniciar Sesión</button></a>
+        <% } %>
+    </div>
+<% } %>
+
+<script>
+function updateCart(id, action) {
+    fetch('/api/cart/update', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ id, action })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const row = document.getElementById(`row-${id}`);
+        const totalEl = document.getElementById('cart-total');
+        const navCount = document.getElementById('nav-cart-count');
+        
+        // Buscar item actualizado
+        const item = data.cart.find(p => p.id == id);
+
+        if (!item) {
+            row.remove(); // Si se eliminó
+            if(data.cart.length === 0) location.reload(); // Si vació todo
+        } else {
+            document.getElementById(`qty-${id}`).innerText = item.quantity;
+            document.getElementById(`sub-${id}`).innerText = `$${(item.price * item.quantity).toFixed(2)}`;
+        }
+        
+        totalEl.innerText = data.total.toFixed(2);
+        // Actualizar contador del menu
+        const totalQty = data.cart.reduce((acc, i) => acc + i.quantity, 0);
+        navCount.innerText = `(${totalQty})`;
+    });
+}
+</script>
+
+<%- include('partials/footer') %>

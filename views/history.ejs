@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+
+<h2>Historial de Compras</h2>
+
+<% if (orders.length === 0) { %>
+    <p>Aún no has realizado compras.</p>
+<% } else { %>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Orden</th>
+                <th>Fecha</th>
+                <th>Productos Comprados</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% orders.forEach(order => { %>
+                <tr>
+                    <td>#<%= order.id %></td>
+                    <td><%= new Date(order.date).toLocaleString() %></td>
+                    <td><%= order.items %></td>
+                    <td style="font-weight: bold; color: var(--primary);">$<%= order.total %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('partials/footer') %>
